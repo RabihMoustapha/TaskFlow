@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Statuses - SocialHub</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/status.css}">
+</head>
+<body>
+    <nav th:replace="~{fragments/nav :: navbar}"></nav>
+    <div class="container">
+        <h2>Statuses</h2>
+        <div class="status-grid">
+            <div th:each="status : ${activeStatuses}" class="status-circle" th:style="'background-image: url(' + ${status.mediaUrl} + ')'">
+                <span th:text="${status.user.username}" class="status-username"></span>
+            </div>
+        </div>
+        <form th:action="@{/statuses}" method="post" class="status-form">
+            <input type="text" name="mediaUrl" placeholder="Image URL" required>
+            <input type="text" name="caption" placeholder="Caption (optional)">
+            <button type="submit" class="btn">Post Status</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <script>
+        // Subscribe to /topic/statuses to update in real time
+    </script>
+</body>
+</html>

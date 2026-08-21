@@ -23,7 +23,7 @@ public class Conversation {
     @Column(nullable = false)
     private ConversationType type = ConversationType.PRIVATE;
 
-    private String name; // for group/community names
+    private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by")
@@ -42,49 +42,17 @@ public class Conversation {
         }
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public ConversationType getType() {
-        return type;
-    }
-
-    public void setType(ConversationType type) {
-        this.type = type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public User getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(User createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public Set<ConversationParticipant> getParticipants() {
-        return participants;
-    }
-
-    public void addParticipant(ConversationParticipant participant) {
-        participants.add(participant);
-        participant.setConversation(this);
-    }
-
-    public void removeParticipant(ConversationParticipant participant) {
-        participants.remove(participant);
-        participant.setConversation(null);
-    }
+    // Getters and setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public ConversationType getType() { return type; }
+    public void setType(ConversationType type) { this.type = type; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public User getCreatedBy() { return createdBy; }
+    public void setCreatedBy(User createdBy) { this.createdBy = createdBy; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public Set<ConversationParticipant> getParticipants() { return participants; }
+    public void setParticipants(Set<ConversationParticipant> participants) { this.participants = participants; }
 }

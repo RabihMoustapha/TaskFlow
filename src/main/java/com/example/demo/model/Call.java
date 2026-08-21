@@ -51,51 +51,19 @@ public class Call {
         }
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public User getCaller() {
-        return caller;
-    }
-
-    public void setCaller(User caller) {
-        this.caller = caller;
-    }
-
-    public User getCallee() {
-        return callee;
-    }
-
-    public void setCallee(User callee) {
-        this.callee = callee;
-    }
-
-    public CallType getType() {
-        return type;
-    }
-
-    public void setType(CallType type) {
-        this.type = type;
-    }
-
-    public CallStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(CallStatus status) {
-        this.status = status;
-    }
-
-    public LocalDateTime getStartedAt() {
-        return startedAt;
-    }
-
-    public LocalDateTime getEndedAt() {
-        return endedAt;
-    }
-
-    public void setEndedAt(LocalDateTime endedAt) {
-        this.endedAt = endedAt;
-    }
+    // Getters and setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public User getCaller() { return caller; }
+    public void setCaller(User caller) { this.caller = caller; }
+    public User getCallee() { return callee; }
+    public void setCallee(User callee) { this.callee = callee; }
+    public CallType getType() { return type; }
+    public void setType(CallType type) { this.type = type; }
+    public CallStatus getStatus() { return status; }
+    public void setStatus(CallStatus status) { this.status = status; }
+    public LocalDateTime getStartedAt() { return startedAt; }
+    public void setStartedAt(LocalDateTime startedAt) { this.startedAt = startedAt; }
+    public LocalDateTime getEndedAt() { return endedAt; }
+    public void setEndedAt(LocalDateTime endedAt) { this.endedAt = endedAt; }
 }
