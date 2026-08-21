@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialHub - Welcome</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container hero">
+        <h1>Welcome to <span class="gradient-text">SocialHub</span></h1>
+        <p>Connect with friends, share your thoughts, and discover new people.</p>
+        <div class="btn-group">
+            <a th:href="@{/login}" class="btn">Login</a>
+            <a th:href="@{/register}" class="btn btn-outline">Register</a>
+        </div>
+    </div>
+</body>
+</html>
