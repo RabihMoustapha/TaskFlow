@@ -57,3 +57,50 @@ Before running the project, ensure you have the following installed:
 
 ```sql
 CREATE DATABASE IF NOT EXISTS socialdb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+### 2. Running the Application
+
+1. Configure database connection
+2. Open src/main/resources/application.properties and update the following properties with your MySQL credentials:
+```
+properties
+spring.datasource.url=jdbc:mysql://localhost:3306/socialdb?useSSL=false&serverTimezone=UTC
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+spring.jpa.hibernate.ddl-auto=update
+(Replace your_username and your_password with your WampServer MySQL credentials. The default is often root with no password.)
+```
+
+### 3. Build the project
+1. Open a terminal in the project root and run:
+```
+bash
+mvn clean install
+```
+
+Or if you are using the Maven wrapper:
+```
+bash
+./mvnw clean install   # Linux/macOS
+mvnw.cmd clean install # Windows
+```
+
+### 4. Run the application
+1. Start the Spring Boot application using:
+```
+bash
+mvn spring-boot:run
+```
+
+or via the wrapper:
+```
+bash
+./mvnw spring-boot:run
+```
+
+Alternatively, you can run the main class SocialHubApplication directly from your IDE.
+
+### 5. Access the app
+Once started, open your browser and visit http://localhost:8080.
+You should see the SocialHub login/registration page.
