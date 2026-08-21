@@ -2,6 +2,9 @@ package com.example.demo.config;
 
 import com.example.demo.interceptor.WebSocketAuthInterceptor;
 import com.example.demo.stomp.StompPrincipal;
+
+import java.util.Map;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
@@ -45,12 +48,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registration.interceptors(new ChannelInterceptor() {
             @Override
             public Message<?> preSend(Message<?> message, MessageChannel channel) {
-                StompHeaderAccessor accessor =
-                        MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
-                if (StompCommand.CONNECT.equals(accessor.getCommand())) {
-                    Object userId = accessor.getSessionAttributes().get("userId");
-                    if (userId != null) {
-                        accessor.setUser(new StompPrincipal(userId.toString()));
+                StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
+                if (accessor != null && StompCommand.CONNECT.equals(accessor.getCommand())) {
+                    Map<String, Object> sessionAttributes = accessor.getSessionAttributes();
+                    if (sessionAttributes != null) {
+                        Object userId = sessionAttributes.get("userId");
+                        if (userId != null) {
+                            accessor.setUser(new StompPrincipal(userId.toString()));
+                        }
                     }
                 }
                 return message;
