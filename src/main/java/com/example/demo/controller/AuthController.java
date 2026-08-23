@@ -26,17 +26,14 @@ public class AuthController {
 
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute("user") User user,
-                           BindingResult result,
-                           Model model,
-                           HttpSession session) {
-        if (result.hasErrors()) {
+            BindingResult result, Model model, HttpSession session) {
+        if (result.hasErrors())
             return "register";
-        }
         try {
             User registered = userService.register(user);
             session.setAttribute("userId", registered.getId());
             session.setAttribute("username", registered.getUsername());
-            return "redirect:/feed";
+            return "redirect:/chat";
         } catch (RuntimeException e) {
             model.addAttribute("error", e.getMessage());
             return "register";
@@ -50,14 +47,13 @@ public class AuthController {
 
     @PostMapping("/login")
     public String login(@RequestParam String usernameOrEmail,
-                        @RequestParam String password,
-                        Model model,
-                        HttpSession session) {
+            @RequestParam String password,
+            Model model, HttpSession session) {
         try {
             User user = userService.login(usernameOrEmail, password);
             session.setAttribute("userId", user.getId());
             session.setAttribute("username", user.getUsername());
-            return "redirect:/feed";
+            return "redirect:/chat"; // <--- Changed from /feed
         } catch (RuntimeException e) {
             model.addAttribute("error", e.getMessage());
             return "login";

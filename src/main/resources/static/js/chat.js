@@ -4,30 +4,37 @@ let currentConversationId = null;
 function connect() {
     const socket = new SockJS('/ws');
     stompClient = Stomp.over(socket);
-    stompClient.connect({}, function(frame) {
+    stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
-        // Subscribe to all conversations? For simplicity, we'll subscribe to a specific conversation when selected.
+        const convIdElement = document.getElementById('messages');
+        if (convIdElement && convIdElement.dataset.currentConvId) {
+            currentConversationId = convIdElement.dataset.currentConvId;
+            selectConversation(currentConversationId);
+        }
     });
 }
 
 function selectConversation(convId) {
     currentConversationId = convId;
-    // Load previous messages via REST
-    fetch(`/chat/${convId}`)
+    document.getElementById('conversationId').value = convId;
+
+    document.querySelectorAll('.conv-item').forEach(el => el.classList.remove('active'));
+    const activeItem = document.querySelector(`.conv-item[data-conv-id="${convId}"]`);
+    if (activeItem) activeItem.classList.add('active');
+
+    fetch('/api/chat/' + convId)
         .then(response => response.json())
         .then(messages => {
             const messagesDiv = document.getElementById('messages');
             messagesDiv.innerHTML = '';
-            messages.forEach(msg => {
-                appendMessage(msg);
-            });
-            // Subscribe to this conversation's topic
-            if (stompClient) {
-                stompClient.subscribe(`/topic/conversation/${convId}`, function(message) {
-                    appendMessage(JSON.parse(message.body));
-                });
-            }
+            messages.forEach(msg => appendMessage(msg));
         });
+
+    if (stompClient) {
+        stompClient.subscribe('/topic/conversation/' + convId, function (message) {
+            appendMessage(JSON.parse(message.body));
+        });
+    }
 }
 
 function appendMessage(msg) {
@@ -36,27 +43,24 @@ function appendMessage(msg) {
     div.className = 'message';
     div.innerHTML = `<strong>${msg.sender.username}</strong>: ${msg.content}`;
     messagesDiv.appendChild(div);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     connect();
 
     document.querySelectorAll('.conv-item').forEach(item => {
-        item.addEventListener('click', function() {
-            document.querySelectorAll('.conv-item').forEach(el => el.classList.remove('active'));
-            this.classList.add('active');
-            const convId = this.dataset.convId;
-            document.getElementById('conversationId').value = convId;
-            selectConversation(convId);
+        item.addEventListener('click', function () {
+            selectConversation(this.dataset.convId);
         });
     });
 
-    document.getElementById('messageForm').addEventListener('submit', function(e) {
+    document.getElementById('messageForm').addEventListener('submit', function (e) {
         e.preventDefault();
         const content = document.getElementById('messageContent').value;
         const convId = document.getElementById('conversationId').value;
         if (content && stompClient && convId) {
-            stompClient.send('/app/chat.sendMessage', {}, JSON.stringify({
+            stompClient.send("/app/chat.sendMessage", {}, JSON.stringify({
                 conversationId: convId,
                 content: content
             }));

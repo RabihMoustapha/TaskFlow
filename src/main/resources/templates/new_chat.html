@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>New Chat - SocialHub</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <nav th:replace="~{fragments/nav :: navbar}"></nav>
+    <div class="container">
+        <h2>Start a New Chat</h2>
+        <p th:if="${param.error}" class="text-danger">User not found or you cannot chat with yourself.</p>
+        <form method="post" action="/chat/new">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Start Chat</button>
+        </form>
+    </div>
+</body>
+
+</html>

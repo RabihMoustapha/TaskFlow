@@ -2,6 +2,9 @@ package com.example.demo.service;
 
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
+
+import java.util.List;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +38,13 @@ public class UserService {
             throw new RuntimeException("Invalid credentials");
         }
         return user;
+    }
+
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username).orElse(null);
+    }
+
+    public List<User> searchUsers(String query) {
+        return userRepository.findByUsernameContainingIgnoreCase(query);
     }
 }

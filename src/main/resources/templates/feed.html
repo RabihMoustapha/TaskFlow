@@ -1,24 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feed - SocialHub</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
-    <nav class="nav">
-        <div class="nav-brand">SocialHub</div>
-        <div class="nav-links">
-            <span th:text="'Hello, ' + ${username}"></span>
-            <a th:href="@{/logout}" class="btn btn-outline btn-sm">Logout</a>
-        </div>
-    </nav>
+    <nav th:replace="~{fragments/nav :: navbar}"></nav>
     <div class="container">
         <div class="card">
             <h3>Share something</h3>
             <form th:action="@{/posts}" th:object="${newPost}" method="post">
-                <textarea th:field="*{content}" rows="3" maxlength="280" placeholder="What's on your mind?" required></textarea>
+                <textarea th:field="*{content}" rows="3" maxlength="280" placeholder="What's on your mind?"
+                    required></textarea>
                 <p th:if="${#fields.hasErrors('content')}" class="error" th:errors="*{content}"></p>
                 <button type="submit" class="btn">Post</button>
             </form>
@@ -36,4 +33,5 @@
         </div>
     </div>
 </body>
+
 </html>

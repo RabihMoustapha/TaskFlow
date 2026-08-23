@@ -10,8 +10,9 @@ public class HomeController {
     @GetMapping("/")
     public String home(HttpSession session) {
         if (session.getAttribute("userId") != null) {
-            return "redirect:/feed";
+            return "redirect:/chat";
         }
         return "index";
     }
+
 }
