@@ -33,7 +33,7 @@ public class AuthController {
             User registered = userService.register(user);
             session.setAttribute("userId", registered.getId());
             session.setAttribute("username", registered.getUsername());
-            return "redirect:/chat";
+            return "redirect:/tasks";
         } catch (RuntimeException e) {
             model.addAttribute("error", e.getMessage());
             return "register";

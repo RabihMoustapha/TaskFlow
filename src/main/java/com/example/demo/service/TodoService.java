@@ -4,10 +4,13 @@ import com.example.demo.model.TodoItem;
 import com.example.demo.model.User;
 import com.example.demo.repository.TodoRepository;
 import com.example.demo.repository.UserRepository;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
+@SuppressWarnings("null") // Prevents VS Code from showing Null Safety warnings
 public class TodoService {
 
     private final TodoRepository todoRepository;
@@ -18,11 +21,11 @@ public class TodoService {
         this.userRepository = userRepository;
     }
 
-    public List<TodoItem> getTasksForUser(Long userId) {
+    public List<TodoItem> getTasksForUser(@NonNull Long userId) {
         return todoRepository.findByUserIdOrderByCreatedAtDesc(userId);
     }
 
-    public TodoItem addTask(Long userId, String title) {
+    public TodoItem addTask(@NonNull Long userId, String title) {
         User user = userRepository.findById(userId).orElseThrow();
         TodoItem task = new TodoItem();
         task.setUser(user);
@@ -30,13 +33,13 @@ public class TodoService {
         return todoRepository.save(task);
     }
 
-    public TodoItem toggleTask(Long taskId, boolean completed) {
+    public TodoItem toggleTask(@NonNull Long taskId, boolean completed) {
         TodoItem task = todoRepository.findById(taskId).orElseThrow();
         task.setCompleted(completed);
         return todoRepository.save(task);
     }
 
-    public void deleteTask(Long taskId) {
+    public void deleteTask(@NonNull Long taskId) {
         todoRepository.deleteById(taskId);
     }
 }
