@@ -94,7 +94,7 @@ or via the wrapper:
 Alternatively, you can run the main class DemoApplication directly from your IDE.
 
 ### 5. Access the app
-Once started, open your browser and visit [Download](http://localhost:8080).
+Once started, open your browser and visit [the localhost](http://localhost:8080).
 
 You should see the TaskFlow welcome page, where you can register a new account or log in. After logging in, you will be redirected to your personal task list at /tasks.
 
