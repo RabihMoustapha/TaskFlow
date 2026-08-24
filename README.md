@@ -1,8 +1,8 @@
-# SocialHub
+# TaskFlow
 
-SocialHub is a simple social media platform built with Spring Boot, Thymeleaf, and MySQL.  
-It allows users to register, log in, and share short posts (up to 280 characters).  
-The frontend features a modern dark glassmorphism design and uses Thymeleaf for server-side rendering.
+TaskFlow is a modern, top-level To-Do List application built with Spring Boot, Thymeleaf, and MySQL.  
+It allows users to register, log in, and manage their daily tasks efficiently with a clean, dark glassmorphism UI.  
+The application uses server-side rendering with Thymeleaf and stores data securely in a relational database.
 
 ---
 
@@ -12,8 +12,10 @@ The frontend features a modern dark glassmorphism design and uses Thymeleaf for 
 - Password encryption using BCrypt
 - User login with username or email
 - Session-based authentication
-- Create posts (up to 280 characters)
-- View a feed of all posts (newest first)
+- Create new tasks (with validation to prevent empty tasks)
+- View a personalized list of tasks (newest first)
+- Toggle tasks as completed/incomplete
+- Delete tasks permanently
 - Responsive, modern UI with CSS gradients and glassmorphism
 - Live reload during development (Spring Boot DevTools)
 
@@ -23,7 +25,7 @@ The frontend features a modern dark glassmorphism design and uses Thymeleaf for 
 
 | Layer      | Technology                       |
 |------------|----------------------------------|
-| Backend    | Spring Boot 3.3.5, Java 17       |
+| Backend    | Spring Boot 3.5.16, Java 17      |
 | Database   | MySQL (via WampServer)           |
 | ORM        | Spring Data JPA / Hibernate      |
 | Frontend   | Thymeleaf, HTML5, CSS3           |
@@ -56,51 +58,54 @@ Before running the project, ensure you have the following installed:
 3. Execute the following SQL to create the database:
 
 ```sql
-CREATE DATABASE IF NOT EXISTS socialdb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE IF NOT EXISTS taskflow_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-### 2. Running the Application
+### 2. Configure Database Connection
 
-1. Configure database connection
-2. Open src/main/resources/application.properties and update the following properties with your MySQL credentials:
+Open src/main/resources/application.properties and update the following properties with your MySQL credential:
 ```
-properties
-spring.datasource.url=jdbc:mysql://localhost:3306/socialdb?useSSL=false&serverTimezone=UTC
+spring.datasource.url=jdbc:mysql://localhost:3306/taskflow_db?useSSL=false&serverTimezone=UTC
 spring.datasource.username=your_username
 spring.datasource.password=your_password
 spring.jpa.hibernate.ddl-auto=update
-(Replace your_username and your_password with your WampServer MySQL credentials. The default is often root with no password.)
 ```
 
 ### 3. Build the project
-1. Open a terminal in the project root and run:
+Open a terminal in the project root and run:
 ```
-bash
 mvn clean install
 ```
-
 Or if you are using the Maven wrapper:
 ```
-bash
 ./mvnw clean install   # Linux/macOS
 mvnw.cmd clean install # Windows
 ```
 
 ### 4. Run the application
-1. Start the Spring Boot application using:
+Start the Spring Boot application using:
 ```
-bash
 mvn spring-boot:run
 ```
-
 or via the wrapper:
 ```
-bash
 ./mvnw spring-boot:run
 ```
-
-Alternatively, you can run the main class SocialHubApplication directly from your IDE.
+Alternatively, you can run the main class DemoApplication directly from your IDE.
 
 ### 5. Access the app
-Once started, open your browser and visit http://localhost:8080.
-You should see the SocialHub login/registration page.
+Once started, open your browser and visit [the localhost](http://localhost:8080).
+
+You should see the TaskFlow welcome page, where you can register a new account or log in. After logging in, you will be redirected to your personal task list at /tasks.
+
+---
+
+### 💡 Final Git Tip:
+Before pushing to GitHub, make sure you have a `.gitignore` file with the following contents to keep your repository clean:
+
+```text
+target/
+.idea/
+.vscode/
+*.iml
+```
