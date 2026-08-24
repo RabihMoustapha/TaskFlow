@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <body>
     <nav class="nav" th:fragment="navbar">
-        <div class="nav-brand">SocialHub</div>
+        <div class="nav-brand">TaskFlow</div>
         <div class="nav-links">
-            <a th:href="@{/feed}">Feed</a>
-            <a th:href="@{/chat}">Chat</a>
-            <a th:href="@{/statuses}">Statuses</a>
-            <a th:href="@{/calls}">Calls</a>
+            <a th:href="@{/tasks}">My Tasks</a>
             <span th:text="'Hello, ' + ${session.username}"></span>
             <a th:href="@{/logout}" class="btn btn-outline btn-sm">Logout</a>
         </div>
     </nav>
 </body>
-
 </html>

@@ -53,7 +53,7 @@ public class AuthController {
             User user = userService.login(usernameOrEmail, password);
             session.setAttribute("userId", user.getId());
             session.setAttribute("username", user.getUsername());
-            return "redirect:/chat"; // <--- Changed from /feed
+            return "redirect:/tasks";
         } catch (RuntimeException e) {
             model.addAttribute("error", e.getMessage());
             return "login";

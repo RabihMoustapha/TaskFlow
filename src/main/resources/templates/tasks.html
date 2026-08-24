@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - My Tasks</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav th:replace="~{fragments/nav :: navbar}"></nav>
+    <div class="container">
+        <div class="card">
+            <h3>Add a New Task</h3>
+            <form method="post" action="/tasks/add">
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" name="title" placeholder="What needs to be done?" required>
+                    <button type="submit" class="btn">Add</button>
+                </div>
+            </form>
+        </div>
+
+        <h3>My Tasks</h3>
+        <div th:if="${#lists.isEmpty(tasks)}" class="card">
+            <p>No tasks yet. Add one above!</p>
+        </div>
+        
+        <div class="task-item" th:each="task : ${tasks}">
+            <form method="post" th:action="@{/tasks/toggle/{id}(id=${task.id})}">
+                <input type="hidden" name="completed" th:value="${!task.completed}">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" th:checked="${task.completed}" onchange="this.form.submit()">
+                    <span th:text="${task.title}" th:classappend="${task.completed} ? 'completed-task'"></span>
+                </label>
+            </form>
+            <form method="post" th:action="@{/tasks/delete/{id}(id=${task.id})}">
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
